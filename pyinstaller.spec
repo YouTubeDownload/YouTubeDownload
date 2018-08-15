@@ -12,7 +12,7 @@ a = Analysis(['qt_gui.py', 'qt_assets/main.py'],
              cipher=block_cipher)
 
 a.datas += [
-    ('assets\\ytdl.png', '.\\assets\\ytdl.png', 'DATA'),
+    ('assets/ytdl.png', './assets/ytdl.png', 'DATA'),
     ('qt_assets/Main.ui', './qt_assets/Main.ui', 'DATA'),
     ('qt_assets/dialogs/About.ui', './qt_assets/dialogs/About.ui', 'DATA'),
     ('qt_assets/tabs/tab_download.ui', './qt_assets/tabs/tab_download.ui', 'DATA'),
