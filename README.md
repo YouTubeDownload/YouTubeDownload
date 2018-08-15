@@ -1,11 +1,22 @@
-# videodownloader
-A Simple Script written in Python to Download YouTube Videos
-These videos can also be downloaded as audio
+# YouTube Download
+A simple application written in Python3 to download YouTube videos.
+These videos can also be downloaded as audio.
 
-### Installation
+![GUI Screenshot](assets/gui_screenshot.png)
+
+![GUI Screenshot Linux](assets/gui_screenshot_linux.png)
+
+### Download Pre-Built Binaries
+Unless you are wanting to use the CLI or do something with the
+scripts themselves, you are most likely looking for the binaries.
+* Download Windows
+* Download Linux
+* Download Mac (Need someone to build)
+
+### Scripts Installation
 1. Clone the Repo
 ```Bash
-cd videodownloader
+cd YouTubeDownload
 # run pipenv shell
 pipenv shell
 # Then install the dependencies
@@ -16,10 +27,10 @@ python3 script.py
 
 ### Usage
 
-You can either run the GUI (`gui.py`), the script (`script.py`) directly for interactive mode,
+You can either run the GUI (`qt_gui.py`), the script (`script.py`) directly for interactive mode,
 or use the command line arguments on the script (`script.py`).
 
-    python3 gui.py
+    python3 qt_gui.py
     python3 script.py
     python3 script.py -u rfscVS0vtbw -l
     python3 script.py -u rfscVS0vtbw -o videos/ -f my_downloaded_video
@@ -44,30 +55,25 @@ or use the command line arguments on the script (`script.py`).
 
 **NOTE:** If you are using a proxy, you need https proxy for https URL!
 
-![GUI Screenshot](assets/gui_screenshot.png)![GUI Screenshot Linux](assets/gui_screenshot_linux.png)
-
 Here's the demo on how to use it
 
 <div align="center">
   <a href="https://vimeo.com/281200561"><img width="60%" src="assets/img.png" alt="view demo"></a><br>
 </div>
 
-### Building Windows EXE
+### Building Binaries
 
-If you want to build the Windows EXE manually, make sure you have pywin32 installed,
+If you want to build binaries, make sure you have pywin32 installed (Windows only),
 as well as pyinstaller. Then run the following command from the script directory.
 
     pyinstaller --clean --onefile pyinstaller.spec
     
-The EXE will be put into the `dist` directory within the script directory.
+The binary will be put into the `dist` directory within the script directory.
     
 ### Contributing
 
 If you would like to suggest changes feel free to fork this repo and create PR or submit an issue
 
-Feel Free to DM on twitter if you have any questions
-[twitter](http://www.twitter.com/muhammad_o7)
-
 
 Join Our Slack Chat
-[Slack](https://join.slack.com/t/videodownloaderpy/shared_invite/enQtNDA1NjM2OTc1MzUwLWFkNGExNDVjNjI3MjNmYjA3NmNlNGUzYmU1NjBlZDUzMjY4NTc1ZWFiMTMxZjg1ZTk5MGQzZGI3MjJmMWQyYjk)
+[Slack](https://join.slack.com/t/youtubedownload/shared_invite/enQtNDE4MDczNzI3MzgyLTk4ZjljNjVjZDQ2NzFlZDdhM2EwMzY2MjIzMjVkM2MzMzc0OTZmMjM4NWQ5ODNjODEwNzhiNTM3YjFiYzczMzc)
