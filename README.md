@@ -5,7 +5,7 @@ These videos can also be downloaded as audio.
 ![GUI Screenshot](assets/gui_screenshot.png)
 
 ![GUI Screenshot Linux](assets/gui_screenshot_linux.png)
-https://github.com/mraza007/videodownloader/releases/download/1.0/YouTube_Video_Audio_Downloader.exe
+
 ### Download Pre-Built Binaries
 Unless you are wanting to use the CLI or do something with the
 scripts themselves, you are most likely looking for the binaries.
