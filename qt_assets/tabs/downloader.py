@@ -33,8 +33,10 @@ class StreamLoader(QObject):
             self.sig_step.emit(self.id, 'Waiting for threads to clear...')
         thread_name = QThread.currentThread().objectName()
         thread_id = int(QThread.currentThreadId())
+        self.sig_step.emit(self.id, f'{thread_id}: {thread_name} thread starting...')
         self.__download_manager.videos = []
         self.__download_manager.streams = []
+        proxies = self.__download_manager.get_proxies()
         top_level_item_count = self.__download_manager.stream_tree.topLevelItemCount()
         for i in range(top_level_item_count):
             self.__download_manager.stream_tree.takeTopLevelItem(i)
@@ -44,7 +46,7 @@ class StreamLoader(QObject):
             print('get video id')
             print(extract.video_id(self.__download_manager.url.text()))
             self.sig_step.emit(self.id, f'Loading video')
-            loaded_url = YouTube(self.__download_manager.url.text())
+            loaded_url = YouTube(self.__download_manager.url.text(), proxies=proxies)
             self.sig_step.emit(self.id, f'Loaded video: {loaded_url.title}')
             self.sig_msg.emit(f'Found {loaded_url.title}')
             if self.__abort:
@@ -70,7 +72,7 @@ class StreamLoader(QObject):
                         self.sig_done.emit(self.id)
                         return
                     self.sig_progress_total.emit(int((i / (len(loaded_url.video_urls) * 2)) * 100))
-                    vid = YouTube(video_url)
+                    vid = YouTube(video_url, proxies=proxies)
                     self.sig_step.emit(self.id, f'Loaded video: {vid.title}')
                     if self.__abort:
                         self.sig_progress_status.emit(f'Aborted!')
@@ -82,8 +84,13 @@ class StreamLoader(QObject):
                     self.sig_progress_status.emit(int((i / len(loaded_url.video_urls)) * 100))
                     i += 1
                 self.sig_progress_total.emit(50)
+            else:
+                self.__download_manager.show_error_dialog('Could not determine Video '
+                                                          'or Playlist ID from provided URL!\n'
+                                                          'Please check input!')
+                return
         except Exception as e:
-            pass
+            self.__download_manager.show_error_dialog(e)
 
         self.sig_msg.emit(f'Loading Streams..')
         print('loading streams')
@@ -170,7 +177,8 @@ class StreamLoader(QObject):
             download_youtube_video(itag=stream_item.stream.itag,
                                    output_path=os.path.abspath(self.__download_manager.output_path.text()),
                                    filename=filename, progress_callback=self.update_progress_bar,
-                                   video_and_stream=(stream_item.video, stream_item.stream))
+                                   video_and_stream=(stream_item.video, stream_item.stream),
+                                   proxies=self.__download_manager.get_proxies())
             self.sig_step.emit(self.id, f'Download finished')
             if self.__abort:
                 self.sig_progress_status.emit(f'Aborted!')
@@ -208,6 +216,7 @@ class StreamTreeWidgetItem(QTreeWidgetItem, QObject):
         return 'Mine'
 
 
+# noinspection PyArgumentList
 class DownloadTab(QWidget):
 
     display_name = 'Downloader'
@@ -274,7 +283,8 @@ class DownloadTab(QWidget):
         self.start_worker('download_streams')
 
     def browse_folder(self):
-        self.output_path.setText(os.path.abspath(str(QFileDialog.getExistingDirectory(self, 'Select Output Directory'))))
+        self.output_path.setText(os.path.abspath(str(QFileDialog.getExistingDirectory(self,
+                                                                                      'Select Output Directory'))))
 
     @pyqtSlot(QTreeWidgetItem, int)
     def check_for_checked(self, item, column):
@@ -293,11 +303,17 @@ class DownloadTab(QWidget):
             self.btn_download.setText(f'Select Streams to Download')
         self.set_thumbnail(item, column)
 
+    def get_proxies(self):
+        proxies = self.proxies.text().replace(' ', '')
+        if proxies != '':
+            proxies = proxies.split(',')
+            return {proxy.split(':')[0]: proxy for proxy in proxies}
+        else:
+            return None
+
     @pyqtSlot(QTreeWidgetItem, int)
     def set_thumbnail(self, item, column):
-        print('get_thumbnail')
         self.current_thumbnail = QPixmap()
-        print(item.video)
         self.current_thumbnail.loadFromData(get_thumbnail(get_thumbnail_url(video=item.video)).read())
         self.thumbnail_preview.setPixmap(self.current_thumbnail)
 
@@ -327,3 +343,6 @@ class DownloadTab(QWidget):
             worker.abort()
             thread.quit()
             thread.wait()
+
+    def show_error_dialog(self, error_msg):
+        self.window().show_error(error_msg)

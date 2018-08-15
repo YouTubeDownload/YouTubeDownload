@@ -56,10 +56,7 @@ def download_youtube_video(url=None, itag=None, audio_only=False, output_path=No
     if video_and_stream is None:
         if 'http' not in url:
             url = 'https://www.youtube.com/watch?v=%s' % url
-        if proxies:
-            video = YouTube(url, proxies=proxies)
-        else:
-            video = YouTube(url)
+        video = YouTube(url, proxies=proxies)
         if itag:
             itag = int(itag)
             stream = video.streams.get_by_itag(itag)

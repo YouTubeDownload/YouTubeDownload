@@ -5,6 +5,7 @@ from PyQt5.uic import loadUi
 
 from qt_assets.tabs import TABS
 from qt_assets.dialogs.dialog_about import AboutDialog
+from qt_assets.dialogs.dialog_error import ErrorDialog
 
 
 class YouTubeDownloader(QMainWindow):
@@ -37,6 +38,11 @@ class YouTubeDownloader(QMainWindow):
     def show_about():
         about_diag = AboutDialog()
         about_diag.exec_()
+
+    @staticmethod
+    def show_error(error_msg):
+        error_diag = ErrorDialog(error_msg)
+        error_diag.exec_()
 
 
 def launch_app():
