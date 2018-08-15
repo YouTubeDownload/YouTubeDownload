@@ -19,6 +19,7 @@ class StreamLoader(QObject):
     sig_msg = pyqtSignal(str)
     sig_progress_status = pyqtSignal(int)
     sig_progress_total = pyqtSignal(int)
+    sig_error = pyqtSignal(str)
     current_file_size = 0
 
     def __init__(self, id: int, download_manager):
@@ -85,12 +86,15 @@ class StreamLoader(QObject):
                     i += 1
                 self.sig_progress_total.emit(50)
             else:
-                self.__download_manager.show_error_dialog('Could not determine Video '
-                                                          'or Playlist ID from provided URL!\n'
-                                                          'Please check input!')
+                self.sig_error.emit('Could not determine Video '
+                                    'or Playlist ID from provided URL!\n'
+                                    'Please check input!')
+                self.sig_done.emit(self.id)
                 return
         except Exception as e:
-            self.__download_manager.show_error_dialog(e)
+            self.sig_error.emit(e)
+            self.sig_done.emit(self.id)
+            return
 
         self.sig_msg.emit(f'Loading Streams..')
         print('loading streams')
@@ -173,7 +177,24 @@ class StreamLoader(QObject):
                 self.sig_done.emit(self.id)
                 break
             self.current_file_size = stream_item.stream.filesize
-            filename = f'{stream_item.video.title}_{i}'
+            filename_override = self.__download_manager.filename_override.text()
+            filename = ''
+            if len(self.__download_manager.streams_to_download) > 1:
+                if filename_override != '':
+                    filename += f'{filename_override}_'
+                filename += f'{stream_item.video.title}'
+                if stream_item.stream.video_codec is not None:
+                    filename += f'_{stream_item.stream.resolution}_{stream_item.stream.fps}'
+                    filename += f'_vc{stream_item.stream.video_codec}'
+                if stream_item.stream.audio_codec is not None:
+                    filename += f'_ac{stream_item.stream.audio_codec}'
+                    filename += f'_abr{stream_item.stream.abr}'
+                filename += f'_{i + 1}'
+            else:
+                if filename_override != '':
+                    filename = filename_override
+                else:
+                    filename = stream_item.video.title
             download_youtube_video(itag=stream_item.stream.itag,
                                    output_path=os.path.abspath(self.__download_manager.output_path.text()),
                                    filename=filename, progress_callback=self.update_progress_bar,
@@ -223,19 +244,23 @@ class DownloadTab(QWidget):
     videos = None
     streams = None
     sig_abort_workers = pyqtSignal()
+    sig_error = pyqtSignal(str)
     current_thumbnail = None
     streams_to_download = {}
     threads = []
     thread_count = 0
+    error_dialog = None
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         QThread.currentThread().setObjectName('tab_downloader')
         loadUi(resource_path('qt_assets/tabs/tab_download.ui'), self)
+        self.main_window = main_window
         self.init_ui()
         self.show()
 
     def init_ui(self):
+        self.sig_error.connect(self.main_window.show_error)
         self.btn_load_url.clicked.connect(self.load_streams)
         self.btn_browse.clicked.connect(self.browse_folder)
         self.btn_download.clicked.connect(self.download_streams)
@@ -254,6 +279,7 @@ class DownloadTab(QWidget):
         worker.sig_step.connect(self.on_worker_step)
         worker.sig_done.connect(self.on_worker_done)
         worker.sig_msg.connect(self.status_text.setText)
+        worker.sig_error.connect(self.show_error)
         worker.sig_progress_status.connect(self.progress_status.setValue)
         worker.sig_progress_total.connect(self.progress_total.setValue)
         self.sig_abort_workers.connect(worker.abort)
@@ -265,6 +291,7 @@ class DownloadTab(QWidget):
         self.output_path.setEnabled(False)
         self.filename_override.setEnabled(False)
         self.proxies.setEnabled(False)
+        self.stream_tree.setEnabled(False)
 
         if job_id is 'load_streams':
             thread.started.connect(worker.load_streams)
@@ -335,6 +362,7 @@ class DownloadTab(QWidget):
             self.output_path.setEnabled(True)
             self.filename_override.setEnabled(True)
             self.proxies.setEnabled(True)
+            self.stream_tree.setEnabled(True)
 
     @pyqtSlot()
     def abort_workers(self):
@@ -344,5 +372,5 @@ class DownloadTab(QWidget):
             thread.quit()
             thread.wait()
 
-    def show_error_dialog(self, error_msg):
-        self.window().show_error(error_msg)
+    def show_error(self, error_msg):
+        self.sig_error.emit(error_msg)

@@ -8,7 +8,8 @@ class HistoryTab(QWidget):
 
     display_name = 'History'
 
-    def __init__(self):
+    def __init__(self, main_window):
         super().__init__()
         loadUi(resource_path('qt_assets/tabs/tab_not_yet.ui'), self)
+        self.main_window = main_window
         self.show()

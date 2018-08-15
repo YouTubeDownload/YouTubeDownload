@@ -10,7 +10,3 @@ class ErrorDialog(QDialog):
         super().__init__()
         loadUi(resource_path('qt_assets/dialogs/Error.ui'), self)
         self.error_box.setText(error_msg)
-
-    def show_dialog(self):
-        self.show()
-        self.exec_()
