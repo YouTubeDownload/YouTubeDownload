@@ -44,12 +44,12 @@ or use the command line arguments on the script (`script.py`).
 
 **NOTE:** If you are using a proxy, you need https proxy for https URL!
 
-![GUI Screenshot](/assets/gui_screenshot.png)![GUI Screenshot Linux](assets/gui_screenshot_linux.png)
+![GUI Screenshot](/assets/gui_screenshot.png)![GUI Screenshot Linux](/assets/gui_screenshot_linux.png)
 
 Here's the demo on how to use it
 
 <div align="center">
-  <a href="https://vimeo.com/281200561"><img width="60%" src="assets/img.png" alt="view demo"></a><br>
+  <a href="https://vimeo.com/281200561"><img width="60%" src="/assets/img.png" alt="view demo"></a><br>
 </div>
 
 ### Building Windows EXE
