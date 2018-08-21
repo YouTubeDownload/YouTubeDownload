@@ -14,8 +14,6 @@ python3 script.py
 
 ### Usage
 
-### Usage
-
 You can either run the GUI (`gui.py`), the script (`script.py`) directly for interactive mode,
 or use the command line arguments on the script (`script.py`).
 
