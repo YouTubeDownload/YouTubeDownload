@@ -44,7 +44,7 @@ or use the command line arguments on the script (`script.py`).
 
 **NOTE:** If you are using a proxy, you need https proxy for https URL!
 
-![GUI Screenshot](assets/gui_screenshot.png)![GUI Screenshot Linux](assets/gui_screenshot_linux.png)
+![GUI Screenshot](/assets/gui_screenshot.png)![GUI Screenshot Linux](assets/gui_screenshot_linux.png)
 
 Here's the demo on how to use it
 
