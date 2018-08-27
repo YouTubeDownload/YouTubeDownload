@@ -65,6 +65,8 @@ The EXE will be put into the `dist` directory within the script directory.
 
 If you would like to suggest changes feel free to fork this repo and create PR or submit an issue
 
+**[Documentation](http://youtube-download.rtfd.io/)**
+
 Feel Free to DM on twitter if you have any questions
 [twitter](http://www.twitter.com/muhammad_o7)
 
