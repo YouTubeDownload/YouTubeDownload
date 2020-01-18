@@ -1,4 +1,5 @@
 import os
+import json
 
 from utils import get_thumbnail, get_thumbnail_url, download_youtube_video, resource_path
 
@@ -11,6 +12,31 @@ from pytube import Playlist, extract
 from pytube import YouTube as pyYouTube
 from pytube.exceptions import RegexMatchError
 from pytube.helpers import regex_search
+
+
+from pytube import mixins
+from pytube.compat import unquote, parse_qsl
+
+
+def fix_descrambler(stream_data, key):
+    """
+    Monkey patch descrambler
+    """
+    if key == 'url_encoded_fmt_stream_map' and not stream_data.get('url_encoded_fmt_stream_map'):
+        formats = json.loads(stream_data['player_response'])['streamingData']['formats']
+        formats.extend(json.loads(stream_data['player_response'])['streamingData']['adaptiveFormats'])
+        stream_data[key] = [{u'url': format_item[u'url'],
+                             u'type': format_item[u'mimeType'],
+                             u'quality': format_item[u'quality'],
+                             u'itag': format_item[u'itag']} for format_item in formats]
+    else:
+        stream_data[key] = [
+            {k: unquote(v) for k, v in parse_qsl(i)}
+            for i in stream_data[key].split(',')
+        ]
+
+
+mixins.apply_descrambler = fix_descrambler
 
 
 class YouTube(pyYouTube):
