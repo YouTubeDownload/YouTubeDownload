@@ -1,6 +1,6 @@
 from os import makedirs
 from pytube import YouTube
-from pytube.compat import urlopen
+from urllib.request import urlopen
 from pytube.helpers import safe_filename
 from pytube.extract import video_id as get_video_id
 
