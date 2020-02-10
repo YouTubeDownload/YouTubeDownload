@@ -8,23 +8,9 @@ from PyQt5.QtWidgets import QWidget, QFileDialog, QTreeWidgetItem, QApplication
 from PyQt5.QtGui import QPixmap
 
 from pytube import Playlist, extract
-from pytube import YouTube as pyYouTube
+from pytube import YouTube
 from pytube.exceptions import RegexMatchError
 from pytube.helpers import regex_search
-
-
-class YouTube(pyYouTube):
-    """
-    Overrides until pyTube is fixed
-    """
-
-    @property
-    def title(self):
-        return self.player_config_args['player_response']['videoDetails']['title']
-
-    @property
-    def thumbnail_url(self):
-        return self.player_config_args['player_response']['videoDetails']['thumbnail']['thumbnails'][-1]['url']
 
 
 class StreamLoader(QObject):
