@@ -24,15 +24,9 @@ copyright = '2018, Muhammad Jslay'
 author = 'Muhammad Jslay'
 
 # The short X.Y version
-<<<<<<< master
 version = '2.2'
 # The full version, including alpha/beta/rc tags
 release = '2.2'
-=======
-version = ''
-# The full version, including alpha/beta/rc tags
-release = '2.0'
->>>>>>> Dev (#8)
 
 
 # -- General configuration ---------------------------------------------------
