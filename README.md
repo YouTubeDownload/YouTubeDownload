@@ -9,8 +9,8 @@ These videos can also be downloaded as audio.
 ### Download Pre-Built Binaries
 Unless you are wanting to use the CLI or do something with the
 scripts themselves, you are most likely looking for the binaries.
-* [Download Windows](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.0/YouTube.Download.exe)
-* [Download Linux](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.0/YouTubeDownload-linux)
+* [Download Windows](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTube.Download.exe)
+* [Download Linux](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTubeDownload-linux)
 * Download Mac (Need someone to build)
 
 ### Scripts Installation
@@ -73,7 +73,3 @@ The binary will be put into the `dist` directory within the script directory.
 ### Contributing
 
 If you would like to suggest changes feel free to fork this repo and create PR or submit an issue
-
-
-Join Our Slack Chat
-[Slack](https://join.slack.com/t/youtubedownload/shared_invite/enQtNDE4MDczNzI3MzgyLTk4ZjljNjVjZDQ2NzFlZDdhM2EwMzY2MjIzMjVkM2MzMzc0OTZmMjM4NWQ5ODNjODEwNzhiNTM3YjFiYzczMzc)
