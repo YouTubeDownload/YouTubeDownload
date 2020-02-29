@@ -11,7 +11,7 @@ Unless you are wanting to use the CLI or do something with the
 scripts themselves, you are most likely looking for the binaries.
 * [Download Windows](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTube.Download.exe)
 * [Download Linux](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTubeDownload-linux)
-* Download Mac (Need someone to build)
+* [Download Mac](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTube.Download.app.gz)
 
 ### Scripts Installation
 1. Clone the Repo
