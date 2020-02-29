@@ -211,7 +211,7 @@ class StreamLoader(QObject):
         self.sig_msg.emit('Finished Download(s)')
         self.sig_done.emit(self.id)
 
-    def update_progress_bar(self, stream, chunk, file_handle, bytes_remaining):
+    def update_progress_bar(self, stream, chunk, bytes_remaining):
         percentage = int(((self.current_file_size - bytes_remaining) / self.current_file_size) * 100)
         self.sig_progress_status.emit(percentage)
 
