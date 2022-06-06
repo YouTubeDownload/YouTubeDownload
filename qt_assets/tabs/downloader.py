@@ -192,7 +192,7 @@ class StreamLoader(QObject):
                     filename += f'_abr{stream_item.stream.abr}'
                 filename += f'_{i + 1}'
             else:
-                if filename_override != '':
+                if filename_override:
                     filename = filename_override
                 else:
                     filename = stream_item.video.title
@@ -294,10 +294,10 @@ class DownloadTab(QWidget):
         self.proxies.setEnabled(False)
         self.stream_tree.setEnabled(False)
 
-        if job_id is 'load_streams':
+        if job_id == 'load_streams':
             thread.started.connect(worker.load_streams)
             self.btn_download.setText(f'Select Streams to Download')
-        elif job_id is 'download_streams':
+        elif job_id == 'download_streams':
             thread.started.connect(worker.download_streams)
         thread.start()
         self.thread_count += 1
