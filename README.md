@@ -10,7 +10,7 @@ These videos can also be downloaded as audio.
 This software is not to be used to violate any laws.
 
 ### Download Pre-Built Binaries
-Unless you are wanting to use the CLI or do something with the
+Unless you want to use the CLI or do something with the
 scripts themselves, you are most likely looking for the binaries.
 * [Download Windows](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTube.Download.exe)
 * [Download Linux](https://github.com/YouTubeDownload/YouTubeDownload/releases/download/v2.2/YouTubeDownload-linux)
