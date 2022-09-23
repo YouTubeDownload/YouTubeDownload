@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.6
+#!/usr/bin/env python3
 # A simple Python Script that will allow you download video
 import argparse
 
